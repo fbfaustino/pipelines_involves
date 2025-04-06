@@ -78,7 +78,7 @@ def create_dimensions_and_fact(df):
 
     def insert_into_snowflake(table_name, df_table):
         if df_table.empty:
-            print(f"⚠️ Nenhum dado para inserir em {table_name}")
+            print(f"Nenhum dado para inserir em {table_name}")
             return
         
         df_table = df_table.replace(["", "NAN", "NaN", "nan", "NULL", "null", pd.NA, pd.NaT], None)
@@ -90,7 +90,7 @@ def create_dimensions_and_fact(df):
             df_table = df_table.dropna(how='all')
         
         if df_table.empty:
-            print(f"⚠️ Nenhum dado válido para inserir em {table_name} após limpeza")
+            print(f"Nenhum dado válido para inserir em {table_name} após limpeza")
             return
             
         placeholders = ", ".join(["%s"] * len(df_table.columns))
@@ -102,9 +102,9 @@ def create_dimensions_and_fact(df):
 
         try:
             cursor.executemany(sql_insert, data_tuples)
-            print(f"✅ Dados inseridos na tabela {table_name} - {len(data_tuples)} registros")
+            print(f"Dados inseridos na tabela {table_name} - {len(data_tuples)} registros")
         except Exception as e:
-            print(f"❌ Erro ao inserir dados na tabela {table_name}: {e}")
+            print(f"Erro ao inserir dados na tabela {table_name}: {e}")
             print("Exemplo de registros problemáticos:", data_tuples[:3])
             raise
 
